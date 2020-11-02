@@ -18,7 +18,7 @@ function getDogImage(dogBreed){
         }
     })
     .then(responseJson => $('.js-image-holder').html(generateImage(responseJson)))
-    .catch(error => alert(error))
+    .catch(error => alert("Something whent wrong. Try again later."))
 }
 
 function handleUserSubmission() {
