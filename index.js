@@ -1,6 +1,8 @@
 function generateImage(responseJson) {
+    console.log(responseJson);
     const image = responseJson.message
 
+    $('.js-image-holder').removeClass('hidden')
     return `
         <div>
             <img src="${image}">
@@ -10,15 +12,17 @@ function generateImage(responseJson) {
 function getDogImage(dogBreed){
     fetch(`https://dog.ceo/api/breed/${dogBreed}/images/random`)
     .then(response => {
-        if(response.ok) {
-            return response.json()
+        if(!response.ok) {
+            alert("Sorry! we can't find that breed. Please try another.")
+            throw Error(response.status + ": " + response.message)
         }
-        else {
-            throw "Sorry! Breed not found."
-        }
+        return response.json();
     })
     .then(responseJson => $('.js-image-holder').html(generateImage(responseJson)))
-    .catch(error => alert("Something whent wrong. Try again later."))
+    .catch(error => {
+        alert("Something went wrong. Please try again later.")
+        console.log(error)
+    });
 }
 
 function handleUserSubmission() {
